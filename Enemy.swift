@@ -9,7 +9,7 @@
 import Foundation
 
 
-protocol EnemyDelegate{
+protocol EnemyDelegate {
     func enemyKilled(score: Int)
 }
 
@@ -23,7 +23,7 @@ class Enemy: CCSprite {
     }
     
     override func touchBegan(touch: CCTouch!, withEvent event: CCTouchEvent!) {
-        var randomScoreIncrease = arc4random_uniform(4) + 2
+        var randomScoreIncrease = arc4random_uniform(5) + 2
         delegate.enemyKilled(Int(randomScoreIncrease))
         isShooting = false
         removeFromParent()

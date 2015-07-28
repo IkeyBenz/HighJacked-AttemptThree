@@ -9,9 +9,14 @@
 import Foundation
 import AudioToolbox
 
-class Gameplay: CCNode, CCPhysicsCollisionDelegate {
+class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
     
+    // GAMEPLAY PROPERTIES
     var gamePhysicsNode: CCPhysicsNode!
+    var gameover: Bool = false
+    var gameoverWasTriggered: Bool = false
+    let defaults = NSUserDefaults.standardUserDefaults()
+    
     
     // LABELS
     var scoreLabel: CCLabelTTF!
@@ -24,65 +29,83 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate {
         didSet {
             health = max(min(health, 400),0)
             lifeBar.scaleX = health / 400
+            
+            if health <= 0 {
+                if !gameoverWasTriggered {
+                    animationManager.runAnimationsForSequenceNamed("Game Over Label")
+                    gameoverWasTriggered = true
+                    gameover = true
+                    scoreLabel.visible = false
+                    playerScoreLabel.string = "Your Score: \(score)"
+                }
+            }
         }
     }
+    
     var score: Int = 0 {
         didSet {
             scoreLabel.string = "\(score)"
-            
-            if score < 20 {
-                randomHeliSpawn = 5
+            if score < 10 {
+                randomHeliSpawn = 10
                 randomBlackHeliSpawn = 0
                 heliScale = 3.0
-                heliSpeed = 5
-            } else if score < 100 && score >= 20 {
-                randomHeliSpawn = 6
+                heliSpeed = 4
+            } else if score < 60 && score >= 10 {
+                randomHeliSpawn = 12
+                randomBlackHeliSpawn = 0
+                heliScale = 2.5
+                heliSpeed = 4
+            } else if score < 100 && score >= 60 {
+                randomHeliSpawn = 14
                 randomBlackHeliSpawn = 0
                 heliScale = 2.5
                 heliSpeed = 4
             } else if score < 150 && score >= 100 {
-                randomHeliSpawn = 7
-                randomBlackHeliSpawn = 0
+                randomHeliSpawn = 12
+                randomBlackHeliSpawn = 2
                 heliScale = 2.3
                 heliSpeed = 4
             } else if score < 200 && score >= 150 {
-                randomHeliSpawn = 7
-                randomBlackHeliSpawn = 1
+                randomHeliSpawn = 12
+                randomBlackHeliSpawn = 4
                 heliScale = 2.0
                 heliSpeed = 3.7
             } else if score < 250 && score >= 200 {
-                randomHeliSpawn = 6
-                randomBlackHeliSpawn = 2
+                randomHeliSpawn = 10
+                randomBlackHeliSpawn = 6
                 heliScale = 2.0
                 heliSpeed = 3.5
             } else if score < 300 && score >= 250 {
-                randomHeliSpawn = 4
-                randomBlackHeliSpawn = 4
+                randomHeliSpawn = 8
+                randomBlackHeliSpawn = 8
                 heliScale = 1.7
                 heliSpeed = 3.5
             } else if score < 400 && score >= 300 {
-                randomHeliSpawn = 2
-                randomBlackHeliSpawn = 6
+                randomHeliSpawn = 6
+                randomBlackHeliSpawn = 10
                 heliScale = 1.7
                 heliSpeed = 3.4
             } else if score < 450 && score >= 400 {
-                randomHeliSpawn = 0
-                randomBlackHeliSpawn = 8
-                heliScale = 1.5
-                heliSpeed = 3.2
-            } else if score >= 450 {
-                randomHeliSpawn = 0
-                randomBlackHeliSpawn = 10
+                randomHeliSpawn = 4
+                randomBlackHeliSpawn = 12
                 heliScale = 1.5
                 heliSpeed = 3
+            } else if score >= 450 {
+                randomHeliSpawn = 1
+                randomBlackHeliSpawn = 14
+                heliScale = 1.7
+                heliSpeed = 2.5
             }
+            
+           
         }
     }
     // HELICOPTER PROPERTIES
     var newBlackHeli: Helicopter!
+    var helicopters: [Helicopter!] = []
     var heliScale: Double = 3.0
     var heliSpeed: Double = 5
-    var randomHeliSpawn: UInt32 = 5
+    var randomHeliSpawn: UInt32 = 10
     var randomBlackHeliSpawn: UInt32 = 0
     
     func didLoadFromCCB(){
@@ -93,6 +116,7 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate {
     func spawnHeli() {
         var heli = CCBReader.load("Helicopter") as! Helicopter
         heli.enemy.delegate = self
+        heli.delegate = self
         heli.scale = Float(heliScale)
         if arc4random_uniform(2) == 1 {
             heli.side = .Right
@@ -102,9 +126,11 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate {
         gamePhysicsNode.addChild(heli)
         heli.move(heliSpeed)
     }
+    
     func spawnBlackHeli() {
-        var blackHeli = CCBReader.load("BlackHelicopter") as! BlackHelicopter
+        var blackHeli = CCBReader.load("BlackHelicopter") as! Helicopter
         blackHeli.enemy.delegate = self
+        blackHeli.delegate = self
         blackHeli.scale = Float(heliScale)
         if arc4random_uniform(2) == 1 {
             blackHeli.side = .Right
@@ -138,34 +164,49 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate {
     }
     
     // WHEN HELICOPTER LEAVES SCREEN
-    func whenHelisLeaveScreen(heli: Helicopter!) {
-        if heli.stoppedMoving {
-            
+    func lowerHealth(doesHaveEnemies: Bool) {
+        if doesHaveEnemies {
+           health -= 100  
         }
     }
     
     
     // UPDATE
     override func update(delta: CCTime) {
-        updateHealthAndVibrate()
+        if !gameover {
+            
+            updateHealthAndVibrate()
+            
+            // Spawn Black Helis
+            var randomBlackSpawn = arc4random_uniform(1000)
+            if randomBlackSpawn < randomBlackHeliSpawn {
+                spawnBlackHeli()
+            }
+            // Spawn Regular Helis
+            var randomSpawn = arc4random_uniform(1000)
+            if randomSpawn < randomHeliSpawn {
+                spawnHeli()
+            }
+        }
+        var currentHighscore = defaults.integerForKey("highScore")
         
-        // Spawn Black Helis
-        var randomBlackSpawn = arc4random_uniform(1000)
-        if randomBlackSpawn < randomBlackHeliSpawn {
-            spawnBlackHeli()
+        if score > currentHighscore {
+            defaults.setInteger(score, forKey: "highScore")
         }
-        // Spawn Regular Helis
-        var randomSpawn = arc4random_uniform(1000)
-        if randomSpawn < randomHeliSpawn {
-            spawnHeli()
-        }
+        
+        highScoreLabel.string = "High Score: \(currentHighscore)"
     }
+    
+    func restart() {
+        CCDirector.sharedDirector().presentScene(CCBReader.loadAsScene("MainScene"))
+    }
+    
     
 
     
 }
 
-extension Gameplay: EnemyDelegate{
+extension Gameplay: EnemyDelegate {
     func enemyKilled(score: Int) {
         self.score += score
     }

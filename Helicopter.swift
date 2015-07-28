@@ -13,6 +13,7 @@ class Helicopter: CCSprite {
     weak var enemy: Enemy!
     var screenWidth = UIScreen.mainScreen().bounds.width
     var stoppedMoving: Bool = false
+    var delegate: helicopterDelegate!
     
     enum State {
         case Right, Left
@@ -36,7 +37,7 @@ class Helicopter: CCSprite {
     }
     
     func move(speed: Double) {
-        var callblock = CCActionCallBlock(block: {self.stoppedMoving = true})
+        var callblock = CCActionCallBlock(block: {self.delegate.lowerHealth(self.checkForEnemies())})
         var move: CCActionMoveTo
         if side == .Right {
             move = CCActionMoveTo(duration: speed, position: ccp(CGFloat(-Double(contentSizeInPoints.width) * 0.5 * Double(scale)), position.y))
@@ -46,8 +47,18 @@ class Helicopter: CCSprite {
         runAction(CCActionSequence(array: [move, callblock]))
     }
     
-    
-    
-    
+    func checkForEnemies() -> Bool {
+        
+        if children.count > 1 {
+            return true
+        }
+        return false
+    }
     
 }
+
+protocol helicopterDelegate {
+    func lowerHealth(doesHaveEnemies:Bool)
+}
+
+
