@@ -16,6 +16,7 @@ protocol EnemyDelegate{
 
 class Enemy: CCSprite {
     var delegate: EnemyDelegate!
+    var isShooting: Bool = false
     
     func didLoadFromCCB() {
         userInteractionEnabled = true
@@ -24,6 +25,7 @@ class Enemy: CCSprite {
     override func touchBegan(touch: CCTouch!, withEvent event: CCTouchEvent!) {
         var randomScoreIncrease = arc4random_uniform(4) + 2
         delegate.enemyKilled(Int(randomScoreIncrease))
+        isShooting = false
         removeFromParent()
     }
     

@@ -235,8 +235,8 @@
 						<string>ScaleLock</string>
 						<key>value</key>
 						<array>
-							<real>0.014999999664723873</real>
-							<real>0.12296043336391449</real>
+							<real>0.23499999940395355</real>
+							<real>0.12300000339746475</real>
 							<false/>
 							<integer>0</integer>
 						</array>
@@ -285,8 +285,6 @@
 						<array/>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 			<dict>
 				<key>UUID</key>
@@ -349,6 +347,8 @@
 						<string>RedNinja.ccb</string>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
@@ -571,7 +571,7 @@
 			<key>offset</key>
 			<real>0.0</real>
 			<key>position</key>
-			<real>0.033333335071802139</real>
+			<real>0.0</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>
