@@ -149,6 +149,19 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
         blackHeli.move(heliSpeed)
     }
     
+    // SPAWN GOLD COINS
+    func spawnGold() {
+        var goldCoin = CCBReader.load("Gold") as! Gold
+        var randomXposition = arc4random_uniform(500) + 25
+        goldCoin.position = ccp(CGFloat(randomXposition), CGFloat(400))
+        gamePhysicsNode.addChild(goldCoin)
+        goldCoin.delegate = self
+    }
+    func ccPhysicsCollisionBegin(pair: CCPhysicsCollisionPair!, coin: Gold!, coinDeleter: CCNode!) -> Bool {
+        coin.removeFromParent()
+        return true
+    }
+    
     // WHEN BLACK HELICOPTER PASSES MIDDLE OF SCREEN
     func ccPhysicsCollisionBegin(pair: CCPhysicsCollisionPair!, gunActivator: CCNode!, blackHelicopter: Helicopter!) -> Bool {
         if blackHelicopter.enemy != nil {
@@ -194,6 +207,11 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
             var randomSpawn = arc4random_uniform(1000)
             if randomSpawn < randomHeliSpawn {
                 spawnHeli()
+            }
+            // Spawn gold coins
+            var randomCoinSpawn = arc4random_uniform(3000)
+            if randomCoinSpawn < 2 {
+                spawnGold()
             }
         }
         checkForHighScore()
@@ -246,6 +264,11 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
 extension Gameplay: EnemyDelegate {
     func enemyKilled(score: Int) {
         self.score += score
+    }
+}
+extension Gameplay: GoldDelegate {
+    func goldTapped(healthIncrease: Float) {
+        self.health += healthIncrease
     }
 }
 

@@ -97,6 +97,7 @@
 		C61D1E851B6A673B0083A7C0 /* PausedScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61D1E841B6A673B0083A7C0 /* PausedScreen.swift */; };
 		C61D1E891B6A970D0083A7C0 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C61D1E881B6A970D0083A7C0 /* GameKit.framework */; };
 		C61D1E8B1B6A99620083A7C0 /* GameCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61D1E8A1B6A99620083A7C0 /* GameCenter.swift */; };
+		C61D1E8D1B6AC2100083A7C0 /* Gold.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61D1E8C1B6AC2100083A7C0 /* Gold.swift */; };
 		C6D7416E1B668F6300A15259 /* Gameplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D7416D1B668F6300A15259 /* Gameplay.swift */; };
 		C6D741741B6690C100A15259 /* Helicopter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D741731B6690C100A15259 /* Helicopter.swift */; };
 		C6D741761B669BFF00A15259 /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D741751B669BFF00A15259 /* Enemy.swift */; };
@@ -221,6 +222,7 @@
 		C61D1E841B6A673B0083A7C0 /* PausedScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PausedScreen.swift; sourceTree = "<group>"; };
 		C61D1E881B6A970D0083A7C0 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		C61D1E8A1B6A99620083A7C0 /* GameCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameCenter.swift; sourceTree = "<group>"; };
+		C61D1E8C1B6AC2100083A7C0 /* Gold.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gold.swift; sourceTree = "<group>"; };
 		C6D7416D1B668F6300A15259 /* Gameplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gameplay.swift; sourceTree = "<group>"; };
 		C6D741731B6690C100A15259 /* Helicopter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helicopter.swift; sourceTree = "<group>"; };
 		C6D741751B669BFF00A15259 /* Enemy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
@@ -455,6 +457,7 @@
 				C6D7416D1B668F6300A15259 /* Gameplay.swift */,
 				C61D1E841B6A673B0083A7C0 /* PausedScreen.swift */,
 				C6D741731B6690C100A15259 /* Helicopter.swift */,
+				C61D1E8C1B6AC2100083A7C0 /* Gold.swift */,
 				C6D741751B669BFF00A15259 /* Enemy.swift */,
 				C61D1E8A1B6A99620083A7C0 /* GameCenter.swift */,
 				D352B48019EC608A00829775 /* MetalShaders */,
@@ -841,6 +844,7 @@
 				C61D1E7B1B6960200083A7C0 /* IntroAnimation.swift in Sources */,
 				C61D1E8B1B6A99620083A7C0 /* GameCenter.swift in Sources */,
 				C6D7416E1B668F6300A15259 /* Gameplay.swift in Sources */,
+				C61D1E8D1B6AC2100083A7C0 /* Gold.swift in Sources */,
 				7A046D7919E84ED5004C4763 /* MainScene.swift in Sources */,
 				5B121038197487F2004C1E1D /* AppDelegate.m in Sources */,
 			);
