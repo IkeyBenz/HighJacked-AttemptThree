@@ -23,12 +23,16 @@ class Enemy: CCSprite {
     }
     
     override func touchBegan(touch: CCTouch!, withEvent event: CCTouchEvent!) {
-        var randomScoreIncrease = arc4random_uniform(5) + 2
-        delegate.enemyKilled(Int(randomScoreIncrease))
-        isShooting = false
-        removeFromParent()
+        if introFinished {
+            if !isPaused {
+                var randomScoreIncrease = arc4random_uniform(5) + 2
+                delegate.enemyKilled(Int(randomScoreIncrease))
+                isShooting = false
+                removeFromParent()
+            }
+        }
     }
     
-   
+    
     
 }

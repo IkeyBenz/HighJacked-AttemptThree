@@ -8,23 +8,34 @@
 
 import Foundation
 import AudioToolbox
+import GameKit
+
+var isPaused: Bool = false
 
 class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
     
     // GAMEPLAY PROPERTIES
-    var gamePhysicsNode: CCPhysicsNode!
+    weak var gamePhysicsNode: CCPhysicsNode!
     var gameover: Bool = false
     var gameoverWasTriggered: Bool = false
+    var pauseButtonWasTouched: Bool = false
     let defaults = NSUserDefaults.standardUserDefaults()
+    weak var pausedScreen: CCNode!
     
+    func didLoadFromCCB(){
+        gamePhysicsNode.collisionDelegate = self
+        
+    }
     
     // LABELS
-    var scoreLabel: CCLabelTTF!
-    var playerScoreLabel: CCLabelTTF!
-    var highScoreLabel: CCLabelTTF!
+    weak var scoreLabel: CCLabelTTF!
+    weak var playerScoreLabel: CCLabelTTF!
+    weak var highScoreLabel: CCLabelTTF!
+    weak var pausedButton: CCButton!
     
     // HEALTH AND SCORE PROPERTIES
-    var lifeBar: CCSprite!
+    weak var lifeBar: CCSprite!
+    weak var healthBar: CCSprite!
     var health: Float = 400 {
         didSet {
             health = max(min(health, 400),0)
@@ -36,6 +47,7 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
                     gameoverWasTriggered = true
                     gameover = true
                     scoreLabel.visible = false
+                    pausedButton.visible = false
                     playerScoreLabel.string = "Your Score: \(score)"
                 }
             }
@@ -97,7 +109,7 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
                 heliSpeed = 2.5
             }
             
-           
+            
         }
     }
     // HELICOPTER PROPERTIES
@@ -107,10 +119,6 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
     var heliSpeed: Double = 5
     var randomHeliSpawn: UInt32 = 10
     var randomBlackHeliSpawn: UInt32 = 0
-    
-    func didLoadFromCCB(){
-        gamePhysicsNode.collisionDelegate = self
-    }
     
     // HELICOPTERS SPWAN
     func spawnHeli() {
@@ -156,7 +164,7 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
         if newBlackHeli != nil {
             if newBlackHeli.enemy != nil {
                 if newBlackHeli.enemy.isShooting {
-                    health -= 1
+                    health -= 0.5
                     AudioServicesPlayAlertSound(1352)
                 }
             }
@@ -166,7 +174,7 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
     // WHEN HELICOPTER LEAVES SCREEN
     func lowerHealth(doesHaveEnemies: Bool) {
         if doesHaveEnemies {
-           health -= 100  
+            health -= 100
         }
     }
     
@@ -188,26 +196,73 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
                 spawnHeli()
             }
         }
-        var currentHighscore = defaults.integerForKey("highScore")
+        checkForHighScore()
         
-        if score > currentHighscore {
-            defaults.setInteger(score, forKey: "highScore")
-        }
-        
-        highScoreLabel.string = "High Score: \(currentHighscore)"
     }
     
+    // BUTTONS
     func restart() {
+        CCDirector.sharedDirector().presentScene(CCBReader.loadAsScene("Gameplay"))
+    }
+    
+    func pause() {
+        if pausedButton.selected {
+            paused = false
+            pausedScreen.visible = false
+            pausedButton.selected = false
+            isPaused = false
+            
+            
+        } else if !pausedButton.selected {
+            paused = true
+            pausedScreen.visible = true
+            pausedButton.selected = true
+            isPaused = true
+            
+        }
+    }
+    func home() {
         CCDirector.sharedDirector().presentScene(CCBReader.loadAsScene("MainScene"))
     }
     
+    // CALLBACKS
+    func lifeBarDisappear() {
+        lifeBar.visible = false
+        healthBar.visible = false
+    }
     
-
-    
+    // HIGHSCORE & GAME CENTER
+    func checkForHighScore() {
+        var currentHighscore = defaults.integerForKey("highScore")
+        if score > currentHighscore {
+            defaults.setInteger(score, forKey: "highScore")
+            GameCenterInteractor.sharedInstance.reportHighScoreToGameCenter(currentHighscore)
+        }
+        highScoreLabel.string = "High Score: \(currentHighscore)"
+    }
 }
 
+// SCORE
 extension Gameplay: EnemyDelegate {
     func enemyKilled(score: Int) {
         self.score += score
     }
+}
+
+//GAME CENTER
+extension Gameplay: GKGameCenterControllerDelegate {
+    func showLeaderboard() {
+        var viewController = CCDirector.sharedDirector().parentViewController!
+        var gameCenterViewController = GKGameCenterViewController()
+        gameCenterViewController.gameCenterDelegate = self
+        viewController.presentViewController(gameCenterViewController, animated: true, completion: nil)
+    }
+    func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController!) {
+        gameCenterViewController.dismissViewControllerAnimated(true, completion: nil)
+    }
+    func setUpGameCenter() {
+        let gameCenterInteractor = GameCenterInteractor.sharedInstance
+        gameCenterInteractor.authenticationCheck()
+    }
+    
 }

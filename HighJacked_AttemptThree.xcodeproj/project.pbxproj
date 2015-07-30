@@ -93,10 +93,13 @@
 		BC5399DA1A44DCC90063F482 /* GLActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5399D51A44DCC90063F482 /* GLActivityKit.framework */; };
 		BC5399DB1A44DCC90063F482 /* JavaFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5399D61A44DCC90063F482 /* JavaFoundation.framework */; };
 		BC5399DC1A44DCC90063F482 /* JavaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5399D71A44DCC90063F482 /* JavaKit.framework */; };
+		C61D1E7B1B6960200083A7C0 /* IntroAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61D1E7A1B6960200083A7C0 /* IntroAnimation.swift */; };
+		C61D1E851B6A673B0083A7C0 /* PausedScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61D1E841B6A673B0083A7C0 /* PausedScreen.swift */; };
+		C61D1E891B6A970D0083A7C0 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C61D1E881B6A970D0083A7C0 /* GameKit.framework */; };
+		C61D1E8B1B6A99620083A7C0 /* GameCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61D1E8A1B6A99620083A7C0 /* GameCenter.swift */; };
 		C6D7416E1B668F6300A15259 /* Gameplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D7416D1B668F6300A15259 /* Gameplay.swift */; };
 		C6D741741B6690C100A15259 /* Helicopter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D741731B6690C100A15259 /* Helicopter.swift */; };
 		C6D741761B669BFF00A15259 /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D741751B669BFF00A15259 /* Enemy.swift */; };
-		C6D7417A1B66C31200A15259 /* RedNinja.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D741791B66C31200A15259 /* RedNinja.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -214,10 +217,13 @@
 		BC5399D51A44DCC90063F482 /* GLActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLActivityKit.framework; path = "../../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/GLActivityKit.framework"; sourceTree = "<group>"; };
 		BC5399D61A44DCC90063F482 /* JavaFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaFoundation.framework; path = "../../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/JavaFoundation.framework"; sourceTree = "<group>"; };
 		BC5399D71A44DCC90063F482 /* JavaKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaKit.framework; path = "../../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/JavaKit.framework"; sourceTree = "<group>"; };
+		C61D1E7A1B6960200083A7C0 /* IntroAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroAnimation.swift; sourceTree = "<group>"; };
+		C61D1E841B6A673B0083A7C0 /* PausedScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PausedScreen.swift; sourceTree = "<group>"; };
+		C61D1E881B6A970D0083A7C0 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		C61D1E8A1B6A99620083A7C0 /* GameCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameCenter.swift; sourceTree = "<group>"; };
 		C6D7416D1B668F6300A15259 /* Gameplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gameplay.swift; sourceTree = "<group>"; };
 		C6D741731B6690C100A15259 /* Helicopter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helicopter.swift; sourceTree = "<group>"; };
 		C6D741751B669BFF00A15259 /* Enemy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
-		C6D741791B66C31200A15259 /* RedNinja.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedNinja.swift; sourceTree = "<group>"; };
 		D352B48019EC608A00829775 /* MetalShaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = MetalShaders; path = Source/MetalShaders; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -262,6 +268,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C61D1E891B6A970D0083A7C0 /* GameKit.framework in Frameworks */,
 				7A97911819E631CD001FFC4D /* libcocos2d.a in Frameworks */,
 				8392007A18EE8E3300B6C429 /* GLKit.framework in Frameworks */,
 				B77F1B3217B978D7009739AE /* QuartzCore.framework in Frameworks */,
@@ -443,11 +450,13 @@
 			isa = PBXGroup;
 			children = (
 				7A40362019DDEF0D007B6E8F /* Platforms */,
+				C61D1E7A1B6960200083A7C0 /* IntroAnimation.swift */,
 				7A046D7519E84C36004C4763 /* MainScene.swift */,
 				C6D7416D1B668F6300A15259 /* Gameplay.swift */,
-				C6D741791B66C31200A15259 /* RedNinja.swift */,
+				C61D1E841B6A673B0083A7C0 /* PausedScreen.swift */,
 				C6D741731B6690C100A15259 /* Helicopter.swift */,
 				C6D741751B669BFF00A15259 /* Enemy.swift */,
+				C61D1E8A1B6A99620083A7C0 /* GameCenter.swift */,
 				D352B48019EC608A00829775 /* MetalShaders */,
 			);
 			name = Source;
@@ -499,6 +508,7 @@
 		B77F1B3017B978D7009739AE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C61D1E881B6A970D0083A7C0 /* GameKit.framework */,
 				BC5399D31A44DCC90063F482 /* AndroidKit.framework */,
 				BC5399D41A44DCC90063F482 /* CoreJava.framework */,
 				BC5399D51A44DCC90063F482 /* GLActivityKit.framework */,
@@ -827,7 +837,9 @@
 				C6D741741B6690C100A15259 /* Helicopter.swift in Sources */,
 				B73789871807631A0076A88C /* main.m in Sources */,
 				C6D741761B669BFF00A15259 /* Enemy.swift in Sources */,
-				C6D7417A1B66C31200A15259 /* RedNinja.swift in Sources */,
+				C61D1E851B6A673B0083A7C0 /* PausedScreen.swift in Sources */,
+				C61D1E7B1B6960200083A7C0 /* IntroAnimation.swift in Sources */,
+				C61D1E8B1B6A99620083A7C0 /* GameCenter.swift in Sources */,
 				C6D7416E1B668F6300A15259 /* Gameplay.swift in Sources */,
 				7A046D7919E84ED5004C4763 /* MainScene.swift in Sources */,
 				5B121038197487F2004C1E1D /* AppDelegate.m in Sources */,
