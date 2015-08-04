@@ -93,6 +93,8 @@
 		BC5399DA1A44DCC90063F482 /* GLActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5399D51A44DCC90063F482 /* GLActivityKit.framework */; };
 		BC5399DB1A44DCC90063F482 /* JavaFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5399D61A44DCC90063F482 /* JavaFoundation.framework */; };
 		BC5399DC1A44DCC90063F482 /* JavaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5399D71A44DCC90063F482 /* JavaKit.framework */; };
+		C60312051B6B489A0096809D /* Bullets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60312041B6B489A0096809D /* Bullets.swift */; };
+		C60312091B6DABEA0096809D /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C60312081B6DABEA0096809D /* iAd.framework */; };
 		C61D1E7B1B6960200083A7C0 /* IntroAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61D1E7A1B6960200083A7C0 /* IntroAnimation.swift */; };
 		C61D1E851B6A673B0083A7C0 /* PausedScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61D1E841B6A673B0083A7C0 /* PausedScreen.swift */; };
 		C61D1E891B6A970D0083A7C0 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C61D1E881B6A970D0083A7C0 /* GameKit.framework */; };
@@ -101,6 +103,7 @@
 		C6D7416E1B668F6300A15259 /* Gameplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D7416D1B668F6300A15259 /* Gameplay.swift */; };
 		C6D741741B6690C100A15259 /* Helicopter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D741731B6690C100A15259 /* Helicopter.swift */; };
 		C6D741761B669BFF00A15259 /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D741751B669BFF00A15259 /* Enemy.swift */; };
+		C6DBF6571B6FA447009F6634 /* iAdHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DBF6561B6FA447009F6634 /* iAdHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -218,6 +221,8 @@
 		BC5399D51A44DCC90063F482 /* GLActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLActivityKit.framework; path = "../../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/GLActivityKit.framework"; sourceTree = "<group>"; };
 		BC5399D61A44DCC90063F482 /* JavaFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaFoundation.framework; path = "../../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/JavaFoundation.framework"; sourceTree = "<group>"; };
 		BC5399D71A44DCC90063F482 /* JavaKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaKit.framework; path = "../../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/JavaKit.framework"; sourceTree = "<group>"; };
+		C60312041B6B489A0096809D /* Bullets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bullets.swift; sourceTree = "<group>"; };
+		C60312081B6DABEA0096809D /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		C61D1E7A1B6960200083A7C0 /* IntroAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroAnimation.swift; sourceTree = "<group>"; };
 		C61D1E841B6A673B0083A7C0 /* PausedScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PausedScreen.swift; sourceTree = "<group>"; };
 		C61D1E881B6A970D0083A7C0 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
@@ -226,6 +231,7 @@
 		C6D7416D1B668F6300A15259 /* Gameplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gameplay.swift; sourceTree = "<group>"; };
 		C6D741731B6690C100A15259 /* Helicopter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helicopter.swift; sourceTree = "<group>"; };
 		C6D741751B669BFF00A15259 /* Enemy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
+		C6DBF6561B6FA447009F6634 /* iAdHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iAdHandler.swift; sourceTree = "<group>"; };
 		D352B48019EC608A00829775 /* MetalShaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = MetalShaders; path = Source/MetalShaders; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -270,6 +276,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C60312091B6DABEA0096809D /* iAd.framework in Frameworks */,
 				C61D1E891B6A970D0083A7C0 /* GameKit.framework in Frameworks */,
 				7A97911819E631CD001FFC4D /* libcocos2d.a in Frameworks */,
 				8392007A18EE8E3300B6C429 /* GLKit.framework in Frameworks */,
@@ -458,8 +465,10 @@
 				C61D1E841B6A673B0083A7C0 /* PausedScreen.swift */,
 				C6D741731B6690C100A15259 /* Helicopter.swift */,
 				C61D1E8C1B6AC2100083A7C0 /* Gold.swift */,
+				C60312041B6B489A0096809D /* Bullets.swift */,
 				C6D741751B669BFF00A15259 /* Enemy.swift */,
 				C61D1E8A1B6A99620083A7C0 /* GameCenter.swift */,
+				C6DBF6561B6FA447009F6634 /* iAdHandler.swift */,
 				D352B48019EC608A00829775 /* MetalShaders */,
 			);
 			name = Source;
@@ -511,6 +520,7 @@
 		B77F1B3017B978D7009739AE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C60312081B6DABEA0096809D /* iAd.framework */,
 				C61D1E881B6A970D0083A7C0 /* GameKit.framework */,
 				BC5399D31A44DCC90063F482 /* AndroidKit.framework */,
 				BC5399D41A44DCC90063F482 /* CoreJava.framework */,
@@ -837,8 +847,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C6DBF6571B6FA447009F6634 /* iAdHandler.swift in Sources */,
 				C6D741741B6690C100A15259 /* Helicopter.swift in Sources */,
 				B73789871807631A0076A88C /* main.m in Sources */,
+				C60312051B6B489A0096809D /* Bullets.swift in Sources */,
 				C6D741761B669BFF00A15259 /* Enemy.swift in Sources */,
 				C61D1E851B6A673B0083A7C0 /* PausedScreen.swift in Sources */,
 				C61D1E7B1B6960200083A7C0 /* IntroAnimation.swift in Sources */,

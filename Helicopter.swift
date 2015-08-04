@@ -23,7 +23,7 @@ class Helicopter: CCSprite {
     
     var side: State! {
         didSet {
-            var randomHeight = Int(arc4random_uniform(180)) + Int(85)
+            var randomHeight = Int(arc4random_uniform(UInt32(contentSizeInPoints.height))) + Int(85)
             if side == .Right {
                 position = ccp(CGFloat(Double(screenWidth) + Double(contentSizeInPoints.width / 2) * Double(scale)), CGFloat(randomHeight))
                 animationManager.runAnimationsForSequenceNamed("LeftHeli")
@@ -39,41 +39,36 @@ class Helicopter: CCSprite {
     }
     
     func move(speed: Double) {
-        if numberOfHelis < 2 {
-            var callblock = CCActionCallBlock(block: {self.delegate.lowerHealth(self.checkForEnemies())})
-            var move: CCActionMoveTo
-            if side == .Right {
-                move = CCActionMoveTo(duration: speed, position: ccp(CGFloat(-Double(contentSizeInPoints.width) * 0.5 * Double(scale)), position.y))
-            } else {
-                move = CCActionMoveTo(duration: speed, position: ccp(CGFloat(Double(screenWidth) + Double(contentSizeInPoints.width / 2) * Double(scale)), position.y))
-            }
-            runAction(CCActionSequence(array: [move, callblock]))
-            
-            //MOVE UP AND DOWN
-            let randomUpDistance = arc4random_uniform(30) + 25
-            var swerveUp = CCActionMoveBy(duration: speed/4, position: ccp(CGFloat(0), CGFloat(randomUpDistance)))
-            let randomDownDistance = arc4random_uniform(40) + 40
-            var swerveDown = CCActionMoveBy(duration: speed/4, position: ccp(CGFloat(0), -CGFloat(randomDownDistance)))
-            
-            if self.position.y < screenHeight / 2 {
-                runAction(CCActionSequence(array: [swerveUp, swerveDown, swerveUp, swerveDown]))
-            } else {
-                runAction(CCActionSequence(array: [swerveDown, swerveUp, swerveDown, swerveUp]))
-            }
-            numberOfHelis += 1
-        }
         
+        var callblock = CCActionCallBlock(block: {self.delegate.lowerHealth(self.checkForEnemies())})
+        var move: CCActionMoveTo
+        if side == .Right {
+            move = CCActionMoveTo(duration: speed, position: ccp(CGFloat(-Double(contentSizeInPoints.width) * 0.5 * Double(scale)), position.y))
+        } else {
+            move = CCActionMoveTo(duration: speed, position: ccp(CGFloat(Double(screenWidth) + Double(contentSizeInPoints.width / 2) * Double(scale)), position.y))
+        }
+        runAction(CCActionSequence(array: [move, callblock]))
+        
+        //MOVE UP AND DOWN
+        let randomUpDistance = arc4random_uniform(30) + 25
+        var swerveUp = CCActionMoveBy(duration: speed/4, position: ccp(CGFloat(0), CGFloat(randomUpDistance)))
+        let randomDownDistance = arc4random_uniform(40) + 40
+        var swerveDown = CCActionMoveBy(duration: speed/4, position: ccp(CGFloat(0), -CGFloat(randomDownDistance)))
+        
+        if self.position.y < screenHeight / 2 {
+            runAction(CCActionSequence(array: [swerveUp, swerveDown, swerveUp, swerveDown]))
+        } else {
+            runAction(CCActionSequence(array: [swerveDown, swerveUp, swerveDown, swerveUp]))
+        }
     }
     
     func checkForEnemies() -> Bool {
         if children.count > 1 {
             enemy.isShooting = false
-            numberOfHelis -= 1
             removeFromParent()
             return true
         }
         removeFromParent()
-        numberOfHelis -= 1
         return false
     }
     

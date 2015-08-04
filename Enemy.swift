@@ -32,7 +32,4 @@ class Enemy: CCSprite {
             }
         }
     }
-    
-    
-    
 }
