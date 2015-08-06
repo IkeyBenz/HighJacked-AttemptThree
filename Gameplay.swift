@@ -22,12 +22,27 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
     var pauseButtonWasTouched: Bool = false
     let defaults = NSUserDefaults.standardUserDefaults()
     weak var pausedScreen: CCNode!
+    var numberOfGrenades: Int = 3 {
+        didSet {
+            amountOfGrenadesLabel.string = String(numberOfGrenades)
+        }
+    }
+    weak var grenadeButton: CCButton!
     
     // LABELS
     weak var scoreLabel: CCLabelTTF!
     weak var playerScoreLabel: CCLabelTTF!
     weak var highScoreLabel: CCLabelTTF!
     weak var pausedButton: CCButton!
+    weak var amountOfGrenadesLabel: CCLabelTTF!
+    
+    // HELICOPTER PROPERTIES
+    var newBlackHeli: Helicopter!
+    var heliScale: Double = 3.0
+    var heliSpeed: Double = 5
+    var randomHeliSpawn: UInt32 = 10
+    var randomBlackHeliSpawn: UInt32 = 0
+    var heliArray: [Helicopter] = []
     
     // HEALTH AND SCORE PROPERTIES
     weak var lifeBar: CCSprite!
@@ -35,8 +50,9 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
     var health: Float = 400 {
         didSet {
             health = max(min(health, 400),0)
-            lifeBar.scaleX = health / 400
+            lifeBar.scaleX = health / 200
             
+            // GAMEOVER
             if health <= 0 {
                 if !gameoverWasTriggered {
                     animationManager.runAnimationsForSequenceNamed("Game Over Label")
@@ -45,6 +61,8 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
                     scoreLabel.visible = false
                     pausedButton.visible = false
                     playerScoreLabel.string = "Your Score: \(score)"
+                    grenadeButton.visible = false
+                    amountOfGrenadesLabel.visible = false
                 }
             }
         }
@@ -64,17 +82,17 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
                 heliScale = 2.5
                 heliSpeed = 4
             } else if score < 100 && score >= 60 {
-                randomHeliSpawn = 14
+                randomHeliSpawn = 13
                 randomBlackHeliSpawn = 0
                 heliScale = 2.5
                 heliSpeed = 4
             } else if score < 150 && score >= 100 {
-                randomHeliSpawn = 12
+                randomHeliSpawn = 11
                 randomBlackHeliSpawn = 2
                 heliScale = 2.3
                 heliSpeed = 4
             } else if score < 200 && score >= 150 {
-                randomHeliSpawn = 12
+                randomHeliSpawn = 11
                 randomBlackHeliSpawn = 4
                 heliScale = 2.0
                 heliSpeed = 3.7
@@ -109,45 +127,39 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
         }
     }
     
-    // HELICOPTER PROPERTIES
-    var newBlackHeli: Helicopter!
-    var heliScale: Double = 3.0
-    var heliSpeed: Double = 5
-    var randomHeliSpawn: UInt32 = 10
-    var randomBlackHeliSpawn: UInt32 = 0
     
     //SHOOTING FEATURE
-//    var isTouching: Bool!
-//    override func touchBegan(touch: CCTouch!, withEvent event: CCTouchEvent!) {
-//        isTouching = true
-//        var touchPosition = touch.locationInWorld()
-//        if isTouching == true {
-//            for var x = 0; x < 100; x++ {
-//                spawnBullets(touchPosition)
-//            }
-//        }
-//    }
-//    override func touchEnded(touch: CCTouch!, withEvent event: CCTouchEvent!) {
-//        isTouching = false
-//    }
-//    
-//    func spawnBullets(touchPosition: CGPoint) {
-//        var touchPosition = touchPosition
-//        var bullet = CCBReader.load("Bullets") as! Bullets
-//        var screenWidth = UIScreen.mainScreen().bounds.width
-//        bullet.position = ccp(screenWidth / 2, CGFloat(-10))
-//        bullet.scale = 0.2
-//        addChild(bullet)
-//        bullet.move(touchPosition)
-//        
-//    }
+    //    var isTouching: Bool!
+    //    override func touchBegan(touch: CCTouch!, withEvent event: CCTouchEvent!) {
+    //        isTouching = true
+    //        var touchPosition = touch.locationInWorld()
+    //        if isTouching == true {
+    //            for var x = 0; x < 100; x++ {
+    //                spawnBullets(touchPosition)
+    //            }
+    //        }
+    //    }
+    //    override func touchEnded(touch: CCTouch!, withEvent event: CCTouchEvent!) {
+    //        isTouching = false
+    //    }
+    //
+    //    func spawnBullets(touchPosition: CGPoint) {
+    //        var touchPosition = touchPosition
+    //        var bullet = CCBReader.load("Bullets") as! Bullets
+    //        var screenWidth = UIScreen.mainScreen().bounds.width
+    //        bullet.position = ccp(screenWidth / 2, CGFloat(-10))
+    //        bullet.scale = 0.2
+    //        addChild(bullet)
+    //        bullet.move(touchPosition)
+    //
+    //    }
     
     func didLoadFromCCB(){
         userInteractionEnabled = true
         gamePhysicsNode.collisionDelegate = self
-        iAdHandler.sharedInstance.loadAds(bannerPosition: .Bottom)
+        iAdHandler.sharedInstance.loadAds(bannerPosition: .Top)
         iAdHandler.sharedInstance.displayBannerAd()
-        iAdHandler.sharedInstance.setBannerPosition(bannerPosition: .Bottom)
+        
         
     }
     
@@ -163,7 +175,10 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
             heli.side = .Left
         }
         gamePhysicsNode.addChild(heli)
+        heliArray.append(heli)
         heli.move(heliSpeed)
+       
+        
     }
     
     func spawnBlackHeli() {
@@ -177,14 +192,17 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
             blackHeli.side = .Left
         }
         gamePhysicsNode.addChild(blackHeli)
+        heliArray.append(blackHeli)
         blackHeli.move(heliSpeed)
+        
     }
-    
+
     // SPAWN GOLD COINS
-    func spawnGold() {
+    func spawnGold(goldPosition: CGPoint) {
         var goldCoin = CCBReader.load("Gold") as! Gold
         var randomXposition = arc4random_uniform(500) + 25
-        goldCoin.position = ccp(CGFloat(randomXposition), CGFloat(400))
+        goldCoin.position = goldPosition
+        goldCoin.scale = 0.7
         gamePhysicsNode.addChild(goldCoin)
         goldCoin.delegate = self
     }
@@ -208,7 +226,7 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
         if newBlackHeli != nil {
             if newBlackHeli.enemy != nil {
                 if newBlackHeli.enemy.isShooting {
-                    health -= 0.5
+                    health -= 0.3
                     AudioServicesPlayAlertSound(1352)
                 }
             }
@@ -236,11 +254,7 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
             if randomSpawn < randomHeliSpawn {
                 spawnHeli()
             }
-            // Spawn gold coins
-            var randomCoinSpawn = arc4random_uniform(3000)
-            if randomCoinSpawn < 2 {
-                spawnGold()
-            }
+            
             updateHealthAndVibrate()
         }
         checkForHighScore()
@@ -258,7 +272,6 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
             pausedButton.selected = false
             isPaused = false
             
-            
         } else if !pausedButton.selected {
             paused = true
             pausedScreen.visible = true
@@ -267,8 +280,16 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
             
         }
     }
+    
     func home() {
         CCDirector.sharedDirector().presentScene(CCBReader.loadAsScene("MainScene"))
+    }
+    
+    func launchGrenade() {
+        if numberOfGrenades > 0 {
+            animationManager.runAnimationsForSequenceNamed("Grenade Explosion")
+            numberOfGrenades -= 1
+        }
     }
     
     // CALLBACKS
@@ -276,28 +297,53 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
         lifeBar.visible = false
         healthBar.visible = false
     }
+    func removeAllHelicopters() {
+        for helicopter in heliArray {
+            if helicopter.enemy != nil {
+                helicopter.enemy.isShooting = false
+            }
+            helicopter.removeFromParent()
+        }
+    }
     
     // HIGHSCORE & GAME CENTER
     func checkForHighScore() {
         var currentHighscore = defaults.integerForKey("highScore")
         if score > currentHighscore {
             defaults.setInteger(score, forKey: "highScore")
-            GameCenterInteractor.sharedInstance.reportHighScoreToGameCenter(currentHighscore)
         }
+        GameCenterInteractor.sharedInstance.reportHighScoreToGameCenter(currentHighscore)
         highScoreLabel.string = "High Score: \(currentHighscore)"
     }
 }
 
-// SCORE
+// SCORE AND GRENADE SPAWN
 extension Gameplay: EnemyDelegate {
-    func enemyKilled(score: Int) {
+    func enemyKilled(score: Int, grenadePosition: CGPoint) {
         self.score += score
+        var rand = arc4random_uniform(20)
+        var randTwo = arc4random_uniform(20)
+        if rand == 1 {
+            var grenade = CCBReader.load("Grenade") as! Grenade
+            grenade.delegate = self
+            grenade.position = grenadePosition
+            gamePhysicsNode.addChild(grenade)
+            grenade.move()
+        } else if randTwo == 1 {
+            spawnGold(grenadePosition)
+        }
     }
 }
 // HEALTH
 extension Gameplay: GoldDelegate {
     func goldTapped(healthIncrease: Float) {
         self.health += healthIncrease
+    }
+}
+// GRENADES
+extension Gameplay: GrenadeDelegate {
+    func addGrenades(addedGrenade: Int) {
+        numberOfGrenades += addedGrenade
     }
 }
 

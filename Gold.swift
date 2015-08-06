@@ -20,6 +20,6 @@ class Gold: CCSprite {
     }
     override func touchBegan(touch: CCTouch!, withEvent event: CCTouchEvent!) {
         removeFromParent()
-        delegate.goldTapped(40) 
+        delegate.goldTapped(60)
     }
 }

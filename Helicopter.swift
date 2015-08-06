@@ -23,7 +23,7 @@ class Helicopter: CCSprite {
     
     var side: State! {
         didSet {
-            var randomHeight = Int(arc4random_uniform(UInt32(contentSizeInPoints.height))) + Int(85)
+            var randomHeight = Int(arc4random_uniform(UInt32(screenHeight - contentSizeInPoints.height))) + Int(contentSizeInPoints.height / 2)
             if side == .Right {
                 position = ccp(CGFloat(Double(screenWidth) + Double(contentSizeInPoints.width / 2) * Double(scale)), CGFloat(randomHeight))
                 animationManager.runAnimationsForSequenceNamed("LeftHeli")

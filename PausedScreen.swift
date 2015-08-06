@@ -18,6 +18,7 @@ class PausedScreen: CCNode {
     
     func home() {
         CCDirector.sharedDirector().presentScene(CCBReader.loadAsScene("MainScene"))
+        isPaused = false
     }
     
     //LEADERBOARD BUTTON!!!!

@@ -10,7 +10,7 @@ import Foundation
 
 
 protocol EnemyDelegate {
-    func enemyKilled(score: Int)
+    func enemyKilled(score: Int, grenadePosition: CGPoint)
 }
 
 
@@ -20,16 +20,20 @@ class Enemy: CCSprite {
     
     func didLoadFromCCB() {
         userInteractionEnabled = true
+        multipleTouchEnabled = true
     }
+    
+    var width = CCDirector.sharedDirector().viewSize().width
     
     override func touchBegan(touch: CCTouch!, withEvent event: CCTouchEvent!) {
         if introFinished {
             if !isPaused {
                 var randomScoreIncrease = arc4random_uniform(5) + 2
-                delegate.enemyKilled(Int(randomScoreIncrease))
+                delegate.enemyKilled(Int(randomScoreIncrease), grenadePosition: self.convertToWorldSpace(position))
                 isShooting = false
                 removeFromParent()
             }
         }
     }
+   
 }
