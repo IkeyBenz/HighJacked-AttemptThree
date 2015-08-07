@@ -17,6 +17,7 @@ class Gold: CCSprite {
     
     func didLoadFromCCB() {
         userInteractionEnabled = true
+        physicsBody.sensor = true
     }
     override func touchBegan(touch: CCTouch!, withEvent event: CCTouchEvent!) {
         removeFromParent()

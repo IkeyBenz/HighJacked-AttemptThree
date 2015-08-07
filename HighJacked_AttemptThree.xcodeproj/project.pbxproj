@@ -99,6 +99,7 @@
 		C646C47C1B73B20F0021723F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C646C47B1B73B20F0021723F /* Images.xcassets */; };
 		C646C47E1B73B2580021723F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C646C47D1B73B2580021723F /* Default-568h@2x.png */; };
 		C646C4801B73B2710021723F /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C646C47F1B73B2710021723F /* Default@2x.png */; };
+		C646C4831B73D4430021723F /* iAdHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C646C4821B73D4430021723F /* iAdHelper.m */; };
 		C6D7416E1B668F6300A15259 /* Gameplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D7416D1B668F6300A15259 /* Gameplay.swift */; };
 		C6D741741B6690C100A15259 /* Helicopter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D741731B6690C100A15259 /* Helicopter.swift */; };
 		C6D741761B669BFF00A15259 /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D741751B669BFF00A15259 /* Enemy.swift */; };
@@ -230,6 +231,8 @@
 		C646C47B1B73B20F0021723F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "HighJacked_AttemptThree iOS/Images.xcassets"; sourceTree = SOURCE_ROOT; };
 		C646C47D1B73B2580021723F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		C646C47F1B73B2710021723F /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		C646C4811B73D4430021723F /* iAdHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iAdHelper.h; sourceTree = "<group>"; };
+		C646C4821B73D4430021723F /* iAdHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iAdHelper.m; sourceTree = "<group>"; };
 		C6D7416D1B668F6300A15259 /* Gameplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gameplay.swift; sourceTree = "<group>"; };
 		C6D741731B6690C100A15259 /* Helicopter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helicopter.swift; sourceTree = "<group>"; };
 		C6D741751B669BFF00A15259 /* Enemy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
@@ -473,6 +476,8 @@
 				C63960431B7128FE0082E769 /* Grenade.swift */,
 				C61D1E8A1B6A99620083A7C0 /* GameCenter.swift */,
 				C6DBF6561B6FA447009F6634 /* iAdHandler.swift */,
+				C646C4811B73D4430021723F /* iAdHelper.h */,
+				C646C4821B73D4430021723F /* iAdHelper.m */,
 				D352B48019EC608A00829775 /* MetalShaders */,
 			);
 			name = Source;
@@ -863,6 +868,7 @@
 				C61D1E8D1B6AC2100083A7C0 /* Gold.swift in Sources */,
 				7A046D7919E84ED5004C4763 /* MainScene.swift in Sources */,
 				5B121038197487F2004C1E1D /* AppDelegate.m in Sources */,
+				C646C4831B73D4430021723F /* iAdHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

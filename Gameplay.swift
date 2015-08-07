@@ -20,11 +20,20 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
     var gameover: Bool = false
     var gameoverWasTriggered: Bool = false
     var pauseButtonWasTouched: Bool = false
+    var grenadeButtonPressed: Bool = false
     let defaults = NSUserDefaults.standardUserDefaults()
     weak var pausedScreen: CCNode!
+    weak var topRedArrow: CCSprite!
+    weak var leftRedArrow: CCSprite!
+    var arrowAnimationIsPlaying: Bool = false
     var numberOfGrenades: Int = 3 {
         didSet {
             amountOfGrenadesLabel.string = String(numberOfGrenades)
+            if numberOfGrenades == 0 {
+                amountOfGrenadesLabel.color = CCColor(ccColor3b: ccColor3B(r: 225, g: 0, b: 0))
+            } else if numberOfGrenades > 0 {
+                amountOfGrenadesLabel.color = CCColor(ccColor3b: ccColor3B(r: 225, g: 225, b: 255))
+            }
         }
     }
     weak var grenadeButton: CCButton!
@@ -51,7 +60,6 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
         didSet {
             health = max(min(health, 400),0)
             lifeBar.scaleX = health / 200
-            
             // GAMEOVER
             if health <= 0 {
                 if !gameoverWasTriggered {
@@ -63,6 +71,8 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
                     playerScoreLabel.string = "Your Score: \(score)"
                     grenadeButton.visible = false
                     amountOfGrenadesLabel.visible = false
+                    topRedArrow.visible = false
+                    leftRedArrow.visible = false
                 }
             }
         }
@@ -109,21 +119,39 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
             } else if score < 400 && score >= 300 {
                 randomHeliSpawn = 6
                 randomBlackHeliSpawn = 10
-                heliScale = 1.7
+                heliScale = 1.9
                 heliSpeed = 3.4
             } else if score < 450 && score >= 400 {
                 randomHeliSpawn = 4
                 randomBlackHeliSpawn = 12
-                heliScale = 1.5
-                heliSpeed = 3
+                heliScale = 1.7
+                heliSpeed = 3.2
             } else if score >= 450 {
                 randomHeliSpawn = 1
                 randomBlackHeliSpawn = 14
-                heliScale = 1.7
-                heliSpeed = 2.5
+                heliScale = 1.5
+                heliSpeed = 3
             }
             
             
+        }
+    }
+    
+    // GRENADE BUTTON ANIMATION
+    var numberOfEnemiesOnScreen: Int = 0 {
+        didSet {
+            if numberOfGrenades > 0 {
+                if numberOfEnemiesOnScreen > 4 {
+                    if !grenadeButtonPressed {
+                        if !arrowAnimationIsPlaying {
+                            topRedArrow.visible = true
+                            leftRedArrow.visible = true
+                            animationManager.runAnimationsForSequenceNamed("Grenade Button Arrows")
+                            arrowAnimationIsPlaying = true
+                        }
+                    }
+                }
+            }
         }
     }
     
@@ -157,9 +185,6 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
     func didLoadFromCCB(){
         userInteractionEnabled = true
         gamePhysicsNode.collisionDelegate = self
-        iAdHandler.sharedInstance.loadAds(bannerPosition: .Top)
-        iAdHandler.sharedInstance.displayBannerAd()
-        
         
     }
     
@@ -174,10 +199,11 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
         } else {
             heli.side = .Left
         }
+        numberOfEnemiesOnScreen++
         gamePhysicsNode.addChild(heli)
         heliArray.append(heli)
         heli.move(heliSpeed)
-       
+        
         
     }
     
@@ -186,17 +212,18 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
         blackHeli.enemy.delegate = self
         blackHeli.delegate = self
         blackHeli.scale = Float(heliScale)
-        if arc4random_uniform(2) == 1 {
+        if arc4random_uniform(1) == 1 {
             blackHeli.side = .Right
         } else {
             blackHeli.side = .Left
         }
+        numberOfEnemiesOnScreen++
         gamePhysicsNode.addChild(blackHeli)
         heliArray.append(blackHeli)
         blackHeli.move(heliSpeed)
         
     }
-
+    
     // SPAWN GOLD COINS
     func spawnGold(goldPosition: CGPoint) {
         var goldCoin = CCBReader.load("Gold") as! Gold
@@ -206,13 +233,13 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
         gamePhysicsNode.addChild(goldCoin)
         goldCoin.delegate = self
     }
-    func ccPhysicsCollisionBegin(pair: CCPhysicsCollisionPair!, coin: Gold!, coinDeleter: CCNode!) -> Bool {
+    func ccPhysicsCollisionBegin(pair: CCPhysicsCollisionPair!, coin: Gold!, coinDeleter: CCNode!) -> ObjCBool {
         coin.removeFromParent()
         return true
     }
     
     // WHEN BLACK HELICOPTER PASSES MIDDLE OF SCREEN
-    func ccPhysicsCollisionBegin(pair: CCPhysicsCollisionPair!, gunActivator: CCNode!, blackHelicopter: Helicopter!) -> Bool {
+    func ccPhysicsCollisionBegin(pair: CCPhysicsCollisionPair!, gunActivator: CCNode!, blackHelicopter: Helicopter!) -> ObjCBool {
         if blackHelicopter.enemy != nil {
             blackHelicopter.enemy.animationManager.runAnimationsForSequenceNamed("Shooting")
             blackHelicopter.enemy.isShooting = true
@@ -237,7 +264,20 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
     func lowerHealth(doesHaveEnemies: Bool) {
         if doesHaveEnemies {
             health -= 100
+            numberOfEnemiesOnScreen -= 1
+            changeColor()
         }
+    }
+    func changeColor() {
+        lifeBar.color = CCColor(ccColor3b: ccColor3B(r: 255, g: 0, b: 0))
+        healthBar.scaleX = 1.4652
+        healthBar.scaleY = 0.9096
+        scheduleOnce("returnToYellow", delay: 0.2)
+    }
+    func returnToYellow() {
+        lifeBar.color = CCColor(ccColor3b: ccColor3B(r: 255, g: 255, b: 127))
+        healthBar.scaleX = 1.221
+        healthBar.scaleY = 0.758
     }
     
     
@@ -286,9 +326,15 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
     }
     
     func launchGrenade() {
-        if numberOfGrenades > 0 {
-            animationManager.runAnimationsForSequenceNamed("Grenade Explosion")
-            numberOfGrenades -= 1
+        if !grenadeButtonPressed {
+            grenadeButtonPressed = true
+            topRedArrow.visible = false
+            leftRedArrow.visible = false
+            if numberOfGrenades > 0 {
+                animationManager.runAnimationsForSequenceNamed("Grenade Explosion")
+                arrowAnimationIsPlaying = false
+                numberOfGrenades -= 1
+            }
         }
     }
     
@@ -301,9 +347,12 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
         for helicopter in heliArray {
             if helicopter.enemy != nil {
                 helicopter.enemy.isShooting = false
+                score += Int(arc4random_uniform(3))
+                numberOfEnemiesOnScreen -= 1
             }
             helicopter.removeFromParent()
         }
+        grenadeButtonPressed = false
     }
     
     // HIGHSCORE & GAME CENTER
@@ -320,17 +369,18 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
 // SCORE AND GRENADE SPAWN
 extension Gameplay: EnemyDelegate {
     func enemyKilled(score: Int, grenadePosition: CGPoint) {
+        numberOfEnemiesOnScreen -= 1
         self.score += score
         var rand = arc4random_uniform(20)
         var randTwo = arc4random_uniform(20)
         if rand == 1 {
+            spawnGold(grenadePosition)
+        } else if randTwo < 2 {
             var grenade = CCBReader.load("Grenade") as! Grenade
             grenade.delegate = self
             grenade.position = grenadePosition
             gamePhysicsNode.addChild(grenade)
             grenade.move()
-        } else if randTwo == 1 {
-            spawnGold(grenadePosition)
         }
     }
 }

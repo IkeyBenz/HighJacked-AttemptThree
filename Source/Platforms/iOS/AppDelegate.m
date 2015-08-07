@@ -59,7 +59,7 @@
 
 - (CCScene*) startScene
 {
-    return [CCBReader loadAsScene:@"IntroAnimation"];
+    return [CCBReader loadAsScene:@"MainScene"];
 }
 
 @end

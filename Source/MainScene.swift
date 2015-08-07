@@ -4,6 +4,8 @@ import GameKit
 class MainScene: CCNode {
     func didLoadFromCCB() {
         setUpGameCenter()
+        iAdHelper.sharedHelper()
+        iAdHelper.setBannerPosition(TOP)
     }
     func playButton() {
         var gameplayScene = CCBReader.loadAsScene("Gameplay")
