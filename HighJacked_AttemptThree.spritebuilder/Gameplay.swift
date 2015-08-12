@@ -79,6 +79,11 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
             }
             
             percentOfGold.string = "\(Int(health / 4))%"
+            if health <= 20 {
+                percentOfGold.color = CCColor(ccColor3b: ccColor3B(r: 225, g: 0, b: 0))
+            } else if health > 20 {
+                percentOfGold.color = CCColor(ccColor3b: ccColor3B(r: 225, g: 225, b: 225))
+            }
         }
     }
     
@@ -118,22 +123,22 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
             } else if score < 300 && score >= 250 {
                 randomHeliSpawn = 8
                 randomBlackHeliSpawn = 8
-                heliScale = 1.7
+                heliScale = 1.9
                 heliSpeed = 3.5
             } else if score < 400 && score >= 300 {
                 randomHeliSpawn = 6
                 randomBlackHeliSpawn = 10
-                heliScale = 1.9
+                heliScale = 2
                 heliSpeed = 3.4
             } else if score < 450 && score >= 400 {
                 randomHeliSpawn = 4
                 randomBlackHeliSpawn = 12
-                heliScale = 1.7
+                heliScale = 2.3
                 heliSpeed = 3.2
             } else if score >= 450 {
                 randomHeliSpawn = 1
                 randomBlackHeliSpawn = 14
-                heliScale = 1.5
+                heliScale = 2.5
                 heliSpeed = 3
             }
             

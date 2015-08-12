@@ -7,8 +7,8 @@ class MainScene: CCNode {
     var settingsIsShown: Bool = false
     func didLoadFromCCB() {
         setUpGameCenter()
-//        iAdHelper.sharedHelper()
-//        iAdHelper.setBannerPosition(TOP)
+        iAdHelper.sharedHelper()
+        iAdHelper.setBannerPosition(TOP)
     }
     func playButton() {
         if !settingsIsShown {
