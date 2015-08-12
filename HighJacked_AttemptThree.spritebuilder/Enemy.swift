@@ -9,8 +9,8 @@
 import Foundation
 
 
-protocol EnemyDelegate{
-    func enemyKilled(score: Int)
+protocol EnemyDelegate {
+    func enemyKilled(score: Int, grenadePosition: CGPoint)
 }
 
 
@@ -20,15 +20,20 @@ class Enemy: CCSprite {
     
     func didLoadFromCCB() {
         userInteractionEnabled = true
+        multipleTouchEnabled = true
     }
+    
+    var width = CCDirector.sharedDirector().viewSize().width
     
     override func touchBegan(touch: CCTouch!, withEvent event: CCTouchEvent!) {
-        var randomScoreIncrease = arc4random_uniform(4) + 2
-        delegate.enemyKilled(Int(randomScoreIncrease))
-        isShooting = false
-        removeFromParent()
+        
+        if !isPaused {
+            var randomScoreIncrease = arc4random_uniform(5) + 2
+            delegate.enemyKilled(Int(randomScoreIncrease), grenadePosition: self.convertToWorldSpace(position))
+            isShooting = false
+            removeFromParent()
+        }
+        
     }
-    
-   
     
 }

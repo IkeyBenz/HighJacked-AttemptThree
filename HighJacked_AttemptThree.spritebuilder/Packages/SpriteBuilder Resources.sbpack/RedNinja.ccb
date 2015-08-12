@@ -416,7 +416,7 @@
 			</dict>
 		</array>
 		<key>customClass</key>
-		<string>RedNinja</string>
+		<string>Enemy</string>
 		<key>displayName</key>
 		<string>CCSprite</string>
 		<key>memberVarAssignmentName</key>

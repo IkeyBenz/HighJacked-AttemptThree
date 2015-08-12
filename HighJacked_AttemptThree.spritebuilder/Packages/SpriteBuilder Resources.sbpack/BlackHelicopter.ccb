@@ -347,12 +347,10 @@
 						<string>RedNinja.ccb</string>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
-		<string>BlackHelicopter</string>
+		<string>Helicopter</string>
 		<key>displayName</key>
 		<string>CCSprite</string>
 		<key>memberVarAssignmentName</key>
@@ -386,40 +384,40 @@
 			<key>points</key>
 			<array>
 				<array>
-					<real>0.0</real>
-					<real>0.0</real>
+					<real>-0.906280517578125</real>
+					<real>-0.6757965087890625</real>
 				</array>
 				<array>
-					<real>0.0</real>
-					<real>48</real>
+					<real>-0.730499267578125</real>
+					<real>46.609375</real>
 				</array>
 				<array>
-					<real>149</real>
-					<real>48</real>
+					<real>149.33200073242188</real>
+					<real>46.527313232421875</real>
 				</array>
 				<array>
-					<real>149</real>
-					<real>0.0</real>
+					<real>149.42575073242188</real>
+					<real>-0.8554840087890625</real>
 				</array>
 			</array>
 			<key>polygons</key>
 			<array>
 				<array>
 					<array>
-						<real>149</real>
-						<real>0.0</real>
+						<real>149.42575073242188</real>
+						<real>-0.8554840087890625</real>
 					</array>
 					<array>
-						<real>149</real>
-						<real>48</real>
+						<real>149.33200073242188</real>
+						<real>46.527313232421875</real>
 					</array>
 					<array>
-						<real>0.0</real>
-						<real>48</real>
+						<real>-0.730499267578125</real>
+						<real>46.609375</real>
 					</array>
 					<array>
-						<real>0.0</real>
-						<real>0.0</real>
+						<real>-0.906280517578125</real>
+						<real>-0.6757965087890625</real>
 					</array>
 				</array>
 			</array>
@@ -441,7 +439,7 @@
 				<string>Position</string>
 				<key>value</key>
 				<array>
-					<real>0.0</real>
+					<real>-1</real>
 					<real>0.0</real>
 					<integer>0</integer>
 					<integer>0</integer>
@@ -516,6 +514,8 @@
 				<array/>
 			</dict>
 		</array>
+		<key>selected</key>
+		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>
