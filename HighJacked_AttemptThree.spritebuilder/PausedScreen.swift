@@ -10,6 +10,22 @@ import Foundation
 import GameKit
 
 class PausedScreen: CCNode {
+    weak var vibrateLabel: CCLabelTTF!
+    
+    override func onEnter() {
+        updateLabel()
+    }
+    
+    func updateLabel () {
+        if GameStateSingleton.sharedInstance.vibrationEnabled == true {
+            vibrateLabel.string = "Vibration: On"
+            shouldVibrate = true
+        } else if GameStateSingleton.sharedInstance.vibrationEnabled == false {
+            vibrateLabel.string = "Vibration: Off"
+            shouldVibrate = false
+        }
+    }
+    
     // BUTTONS
     func restart() {
         CCDirector.sharedDirector().presentScene(CCBReader.loadAsScene("Gameplay"))
@@ -20,8 +36,20 @@ class PausedScreen: CCNode {
         CCDirector.sharedDirector().presentScene(CCBReader.loadAsScene("MainScene"))
         isPaused = false
     }
+ 
+    func vibrateSelector() {
+        if GameStateSingleton.sharedInstance.vibrationEnabled == true {
+            GameStateSingleton.sharedInstance.vibrationEnabled = false
+            
+        } else if GameStateSingleton.sharedInstance.vibrationEnabled == false {
+            GameStateSingleton.sharedInstance.vibrationEnabled = true
+        }
+        
+        updateLabel()
+    }
+
     
-    //REMOVE ADS BUTTON GOES HERE
+    
 }
 
 extension PausedScreen: GKGameCenterControllerDelegate {

@@ -125,7 +125,7 @@
 							<real>0.0</real>
 							<real>0.0</real>
 							<real>0.0</real>
-							<real>0.75</real>
+							<real>0.80000001192092896</real>
 						</array>
 					</dict>
 					<dict>
@@ -134,7 +134,7 @@
 						<key>type</key>
 						<string>Float</string>
 						<key>value</key>
-						<real>0.75</real>
+						<real>0.80000001192092896</real>
 					</dict>
 				</array>
 			</dict>
@@ -377,11 +377,11 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>137</real>
-							<real>107.23138427734375</real>
+							<real>0.24119718372821808</real>
+							<real>0.33509808778762817</real>
 							<integer>0</integer>
-							<integer>0</integer>
-							<integer>0</integer>
+							<integer>2</integer>
+							<integer>2</integer>
 						</array>
 					</dict>
 					<dict>
@@ -703,8 +703,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>0.10176055878400803</real>
-							<real>0.15000000596046448</real>
+							<real>0.5</real>
+							<real>0.34999999403953552</real>
 							<integer>1</integer>
 							<integer>2</integer>
 							<integer>2</integer>
@@ -717,8 +717,8 @@
 						<string>Point</string>
 						<key>value</key>
 						<array>
-							<real>0.0</real>
-							<real>1</real>
+							<real>0.5</real>
+							<real>0.5</real>
 						</array>
 					</dict>
 					<dict>
@@ -755,7 +755,7 @@
 						<key>type</key>
 						<string>FontTTF</string>
 						<key>value</key>
-						<string>Helvetica</string>
+						<string>Futura-CondensedExtraBold</string>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -914,11 +914,11 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>393</real>
-							<real>107.23138427734375</real>
+							<real>0.73855632543563843</real>
+							<real>0.33509808778762817</real>
 							<integer>0</integer>
-							<integer>0</integer>
-							<integer>0</integer>
+							<integer>2</integer>
+							<integer>2</integer>
 						</array>
 					</dict>
 					<dict>
@@ -1248,11 +1248,11 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>393</real>
-							<real>107.23138427734375</real>
+							<real>0.73855632543563843</real>
+							<real>0.33509808778762817</real>
 							<integer>0</integer>
-							<integer>0</integer>
-							<integer>0</integer>
+							<integer>2</integer>
+							<integer>2</integer>
 						</array>
 					</dict>
 					<dict>

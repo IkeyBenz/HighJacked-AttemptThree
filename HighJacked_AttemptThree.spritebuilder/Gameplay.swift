@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import AudioToolbox
 import GameKit
 
 
@@ -132,14 +131,14 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
                 heliSpeed = 3.4
             } else if score < 450 && score >= 400 {
                 randomHeliSpawn = 4
-                randomBlackHeliSpawn = 12
-                heliScale = 2.3
-                heliSpeed = 3.2
+                randomBlackHeliSpawn = 13
+                heliScale = 1.9
+                heliSpeed = 3
             } else if score >= 450 {
                 randomHeliSpawn = 1
-                randomBlackHeliSpawn = 14
-                heliScale = 2.5
-                heliSpeed = 3
+                randomBlackHeliSpawn = 15
+                heliScale = 1.7
+                heliSpeed = 2.7
             }
             
             
@@ -390,7 +389,7 @@ extension Gameplay: EnemyDelegate {
         var rand = arc4random_uniform(20)
         if rand < 4 {
             spawnGold(grenadePosition)
-        } else if rand == 2 {
+        } else if rand < 4 {
             var grenade = CCBReader.load("Grenade") as! Grenade
             grenade.delegate = self
             grenade.position = grenadePosition
