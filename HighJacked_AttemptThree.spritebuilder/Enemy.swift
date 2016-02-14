@@ -28,7 +28,7 @@ class Enemy: CCSprite {
     override func touchBegan(touch: CCTouch!, withEvent event: CCTouchEvent!) {
         
         if !isPaused {
-            var randomScoreIncrease = arc4random_uniform(5) + 2
+            let randomScoreIncrease = arc4random_uniform(5) + 2
             delegate.enemyKilled(Int(randomScoreIncrease), grenadePosition: self.convertToWorldSpace(position))
             isShooting = false
             removeFromParent()

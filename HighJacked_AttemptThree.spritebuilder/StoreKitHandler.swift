@@ -28,37 +28,37 @@ class StoreKitHandler: NSObject {
         
         // Check for previously purchased products
         for productIdentifier in productIdentifiers {
-            var productPurchased: Bool = NSUserDefaults.standardUserDefaults().boolForKey(productIdentifier as! String)
+            let productPurchased: Bool = NSUserDefaults.standardUserDefaults().boolForKey(productIdentifier as! String)
             
             if productPurchased {
                 purchasedProductionIdentifiers.addObject(productIdentifier)
-                println("Previously purchased \(productIdentifier)")
+                print("Previously purchased \(productIdentifier)")
             }
         }
     }
 }
 
 extension StoreKitHandler:  SKProductsRequestDelegate {
-    func productsRequest(request: SKProductsRequest!, didReceiveResponse response: SKProductsResponse!) {
-        println("Loaded list of products")
+    func productsRequest(request: SKProductsRequest, didReceiveResponse response: SKProductsResponse) {
+        print("Loaded list of products")
         
         productsRequest = nil
         
-        var skProducts: Array = response.products
+        let skProducts: Array = response.products
         
         for skProduct in skProducts {
-            println("Found product \(skProduct.productIdentifier), \(skProduct.localizedTitle), \(skProduct.price)")
+            print("Found product \(skProduct.productIdentifier), \(skProduct.localizedTitle), \(skProduct.price)")
         }
         
         
     }
     
-    func request(request: SKRequest!, didFailWithError error: NSError!) {
-        println("Failed to load list of products")
+    func request(request: SKRequest, didFailWithError error: NSError) {
+        print("Failed to load list of products")
         productsRequest = nil
     }
     
-    func requestDidFinish(request: SKRequest!) {
+    func requestDidFinish(request: SKRequest) {
         
     }
 }

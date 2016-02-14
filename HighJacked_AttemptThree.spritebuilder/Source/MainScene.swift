@@ -12,7 +12,7 @@ class MainScene: CCNode {
     }
     func playButton() {
         if !settingsIsShown {
-            var gameplayScene = CCBReader.loadAsScene("Gameplay")
+            let gameplayScene = CCBReader.loadAsScene("Gameplay")
             CCDirector.sharedDirector().presentScene(gameplayScene)
         }
         
@@ -32,12 +32,12 @@ class MainScene: CCNode {
 }
 extension MainScene: GKGameCenterControllerDelegate {
     func showLeaderboard() {
-        var viewController = CCDirector.sharedDirector().parentViewController!
-        var gameCenterViewController = GKGameCenterViewController()
+        let viewController = CCDirector.sharedDirector().parentViewController!
+        let gameCenterViewController = GKGameCenterViewController()
         gameCenterViewController.gameCenterDelegate = self
         viewController.presentViewController(gameCenterViewController, animated: true, completion: nil)
     }
-    func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController!) {
+    func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController) {
         gameCenterViewController.dismissViewControllerAnimated(true, completion: nil)
     }
     func setUpGameCenter() {

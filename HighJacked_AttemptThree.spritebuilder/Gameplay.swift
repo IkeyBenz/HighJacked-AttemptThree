@@ -202,7 +202,7 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
     
     // HELICOPTERS SPWAN
     func spawnHeli() {
-        var heli = CCBReader.load("Helicopter") as! Helicopter
+        let heli = CCBReader.load("Helicopter") as! Helicopter
         heli.enemy.delegate = self
         heli.delegate = self
         heli.scale = Float(heliScale)
@@ -220,7 +220,7 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
     }
     
     func spawnBlackHeli() {
-        var blackHeli = CCBReader.load("BlackHelicopter") as! Helicopter
+        let blackHeli = CCBReader.load("BlackHelicopter") as! Helicopter
         blackHeli.enemy.delegate = self
         blackHeli.delegate = self
         blackHeli.scale = Float(heliScale)
@@ -238,7 +238,7 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
     
     // SPAWN GOLD COINS
     func spawnGold(goldPosition: CGPoint) {
-        var goldCoin = CCBReader.load("Gold") as! Gold
+        let goldCoin = CCBReader.load("Gold") as! Gold
         
         goldCoin.position = goldPosition
         goldCoin.scale = 0.7
@@ -299,12 +299,12 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
     override func update(delta: CCTime) {
         if !gameover {
             // Spawn Black Helis
-            var randomBlackSpawn = arc4random_uniform(1000)
+            let randomBlackSpawn = arc4random_uniform(1000)
             if randomBlackSpawn < randomBlackHeliSpawn {
                 spawnBlackHeli()
             }
             // Spawn Regular Helis
-            var randomSpawn = arc4random_uniform(1000)
+            let randomSpawn = arc4random_uniform(1000)
             if randomSpawn < randomHeliSpawn {
                 spawnHeli()
             }
@@ -372,7 +372,7 @@ class Gameplay: CCNode, CCPhysicsCollisionDelegate, helicopterDelegate {
     
     // HIGHSCORE & GAME CENTER
     func checkForHighScore() {
-        var currentHighscore = defaults.integerForKey("highScore")
+        let currentHighscore = defaults.integerForKey("highScore")
         if score > currentHighscore {
             defaults.setInteger(score, forKey: "highScore")
         }
@@ -386,11 +386,11 @@ extension Gameplay: EnemyDelegate {
     func enemyKilled(score: Int, grenadePosition: CGPoint) {
         numberOfEnemiesOnScreen -= 1
         self.score += score
-        var rand = arc4random_uniform(20)
+        let rand = arc4random_uniform(20)
         if rand < 4 {
             spawnGold(grenadePosition)
         } else if rand < 4 {
-            var grenade = CCBReader.load("Grenade") as! Grenade
+            let grenade = CCBReader.load("Grenade") as! Grenade
             grenade.delegate = self
             grenade.position = grenadePosition
             gamePhysicsNode.addChild(grenade)
@@ -414,12 +414,12 @@ extension Gameplay: GrenadeDelegate {
 //GAME CENTER
 extension Gameplay: GKGameCenterControllerDelegate {
     func showLeaderboard() {
-        var viewController = CCDirector.sharedDirector().parentViewController!
-        var gameCenterViewController = GKGameCenterViewController()
+        let viewController = CCDirector.sharedDirector().parentViewController!
+        let gameCenterViewController = GKGameCenterViewController()
         gameCenterViewController.gameCenterDelegate = self
         viewController.presentViewController(gameCenterViewController, animated: true, completion: nil)
     }
-    func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController!) {
+    func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController) {
         gameCenterViewController.dismissViewControllerAnimated(true, completion: nil)
     }
     func setUpGameCenter() {

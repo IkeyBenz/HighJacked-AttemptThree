@@ -15,8 +15,8 @@ protocol GrenadeDelegate {
 class Grenade: CCSprite {
     var delegate: GrenadeDelegate!
     func move() {
-        var move = CCActionMoveBy(duration: 3, position:  ccp(CGFloat(0), -CGFloat(400)))
-        var callblock = CCActionCallBlock(block: {self.removeFromParent()})
+        let move = CCActionMoveBy(duration: 3, position:  ccp(CGFloat(0), -CGFloat(400)))
+        let callblock = CCActionCallBlock(block: {self.removeFromParent()})
         runAction(CCActionSequence(array: [move, callblock]))
     }
     
